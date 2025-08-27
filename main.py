@@ -9,6 +9,7 @@ from api.v1.routes.auth import router as auth_router
 from api.v1.routes.dashboard import router as dashboard_router
 from api.v1.routes.course import router as course_router
 from api.v1.routes.log import router as log_router
+from api.v1.routes.analytics import router as analytics_router
 
 load_dotenv()
 
@@ -38,3 +39,4 @@ app.include_router(auth_router, prefix="/auth", tags=["auth"])
 app.include_router(dashboard_router, prefix="/dashboard", tags=["dashboard"])
 app.include_router(course_router, prefix="/courses", tags=["courses"])
 app.include_router(log_router, prefix="/logs", tags=["logs"])
+app.include_router(analytics_router, prefix="/analytics", tags=["analytics"])
