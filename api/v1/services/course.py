@@ -57,6 +57,12 @@ class CourseService:
                 detail="Database error while creating course."
             )
 
-    def retrieve_all_courses(self) -> List[Course]:
-        """Retrieves all courses."""
-        return self.db.query(Course).order_by(Course.name).all()
+    def retrieve_all_courses(self, user_id: str) -> List[Course]:
+        """Retrieves all courses for a given user."""
+        return (
+        self.db.query(Course)
+        .join(UserCourse, UserCourse.course_id == Course.id)
+        .filter(UserCourse.user_id == user_id)
+        .order_by(Course.name)
+        .all()
+    )
