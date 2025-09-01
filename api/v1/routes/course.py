@@ -28,4 +28,4 @@ def get_all_courses(
     course_service: CourseService = Depends(get_course_service),
     current_user: User = Depends(get_current_user)
 ):
-    return course_service.retrieve_all_courses()
+    return course_service.retrieve_all_courses(current_user.id)
