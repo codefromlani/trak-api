@@ -24,7 +24,7 @@ def add_courses(
     return course_service.create_courses(course_names=course_names, user_id=current_user.id)
 
 @router.get("", response_model=List[CourseResponse])
-def get_all_courses(
+def get_all_user_courses(
     course_service: CourseService = Depends(get_course_service),
     current_user: User = Depends(get_current_user)
 ):
