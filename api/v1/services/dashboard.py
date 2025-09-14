@@ -2,7 +2,7 @@
 from sqlalchemy.orm import Session
 from datetime import date, timedelta
 from sqlalchemy import func
-from typing import List
+from typing import List, Dict, Any
 
 from ..models.study_session import StudySession
 from ..models.course import Course
@@ -82,4 +82,23 @@ class DashboardService:
         return [
             ChecklistItem(course_name=name, last_studied_at=last_studied_at)
             for name, last_studied_at in checklist_data
+        ]
+
+    def get_recent_study_sessions(self, user_id: str, limit: int = 5) -> List[Dict[str, Any]]:
+        """
+        Retrieves a list of the most recent study sessions for a user.
+        """
+        recent_sessions = (
+            self.db.query(StudySession.date, Course.name)
+            .join(Course, StudySession.course_id == Course.id)
+            .filter(StudySession.user_id == user_id)
+            .order_by(StudySession.date.desc())
+            .limit(limit)
+            .all()
+        )
+
+        # Format the results into a list of dictionaries
+        return [
+            {"date": session_date, "course_name": course_name}
+            for session_date, course_name in recent_sessions
         ]
