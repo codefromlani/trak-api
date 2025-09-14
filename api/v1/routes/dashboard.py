@@ -36,3 +36,10 @@ def get_dashboard_checklist(
     current_user: User = Depends(get_current_user)
 ):
     return dashboard_service.get_checklist_items(current_user.id)
+
+@router.get("/recent/course", response_model=List[Dict[str, Any]])
+def get_recent_courses_endpoint(
+    dashboard_service: DashboardService = Depends(get_dashboard_service),
+    current_user: User = Depends(get_current_user)
+):
+    return dashboard_service.get_recent_study_sessions(current_user.id)
